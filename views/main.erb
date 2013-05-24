@@ -1,0 +1,22 @@
+<div class="row">
+  <div class="span12">
+    <table class="table table-bordered table-striped">
+      <thead>
+        <tr>
+          <th>Repository</th>
+          <th>Number</th>
+          <th>Title</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @issues.each do |issue| %>
+          <tr>
+            <td><%= issue["repository"]["full_name"] %></td>
+            <td><%= issue["number"] %></td>
+            <td><a href="<%= issue["html_url"]%>"><%= issue["title"] %></a></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
