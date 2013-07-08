@@ -57,7 +57,7 @@ get "/" do
       redirect "/"
     end
   else
-    @auth_url = github.authorize_url :redirect_uri => "#{root_url}/auth", :scope => "repo"
+    @auth_url = github.authorize_url :redirect_uri => "#{root_url}/auth", :scope => "public_repo"
     erb :index
   end
 end
