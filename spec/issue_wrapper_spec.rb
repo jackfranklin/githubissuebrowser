@@ -41,6 +41,16 @@ describe IssueWrapper do
     end
   end
 
+  describe "#filtered?" do
+    it "returns true if filtered and false if not" do
+      expect(@wrap.filtered?).to eq(false)
+      @wrap.filter_by_owner("tester")
+      expect(@wrap.filtered?).to eq(true)
+      @wrap.restore
+      expect(@wrap.filtered?).to eq(false)
+    end
+  end
+
   describe "filtering by owner" do
     it "correctly filters" do
       @wrap.filter_by_owner("tester")

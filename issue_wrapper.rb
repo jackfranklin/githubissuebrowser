@@ -13,6 +13,10 @@ class IssueWrapper
     self
   end
 
+  def filtered?
+    @all_issues.length != @issues.length
+  end
+
   def filter_by_name(text)
     @issues = @issues.select { |issue| issue.name == text }
     self
