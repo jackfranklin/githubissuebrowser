@@ -10,6 +10,12 @@ describe IssueWrapper do
     },
     {
       "repository" => {
+        "full_name" => "jackfranklin/test"
+      },
+      "created_at" => DateTime.now.to_s
+    },
+    {
+      "repository" => {
         "full_name" => "jackfranklin/test2"
       },
       "created_at" => DateTime.now.to_s
@@ -25,7 +31,7 @@ describe IssueWrapper do
   describe "Initialising" do
     it "parses the raw issues" do
       expect(@wrap.issues.first.class).to eq(Issue)
-      expect(@wrap.issues.length).to eq(3)
+      expect(@wrap.issues.length).to eq(4)
     end
     it "parses out owners" do
       expect(@wrap.owners).to eq(["jackfranklin", "tester"])
@@ -46,15 +52,23 @@ describe IssueWrapper do
       @wrap.filter_by_owner("tester")
       expect(@wrap.issues.length).to eq(1)
       @wrap.restore
-      expect(@wrap.issues.length).to eq(3)
+      expect(@wrap.issues.length).to eq(4)
     end
   end
 
   describe "filtering by name" do
     it "correctly filters" do
       @wrap.filter_by_name("test")
-      expect(@wrap.issues.length).to eq(1)
+      expect(@wrap.issues.length).to eq(2)
       expect(@wrap.issues.first.owner).to eq("jackfranklin")
     end
   end
+
+  describe "getting repo names for owner" do
+    it "filters based on the owner" do
+      repos = @wrap.names_for_owner("jackfranklin")
+      expect(repos).to eq(["test", "test2"])
+    end
+  end
+
 end
