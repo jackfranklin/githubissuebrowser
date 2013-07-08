@@ -24,9 +24,7 @@ class IssueWrapper
 
   def names_for_owner(owner)
     filter_by_owner(owner)
-    @issues.map { |issue|
-      issue.name
-    }.uniq
+    @all_issues.map { |issue| issue.name }.uniq
   end
 
   def restore

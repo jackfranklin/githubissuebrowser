@@ -16,12 +16,19 @@
         <label>Repository</label>
         <select name="name">
           <option value="all">All</option>
-          <% @wrapper.names.map { |name| name.downcase }.sort.each do |name| %>
-            <option value="<%= name %>" <%= "selected" if params[:name] == name %> ><%= name %></option>
+          <% if params[:owner] %>
+            <% @wrapper.names_for_owner(params[:owner]).map { |name| name.downcase }.sort.each do |name| %>
+              <option value="<%= name %>" <%= "selected" if params[:name] == name %> ><%= name %></option>
+            <% end %>
+          <% else %>
+            <% @wrapper.names.map { |name| name.downcase }.sort.each do |name| %>
+              <option value="<%= name %>" <%= "selected" if params[:name] == name %> ><%= name %></option>
+            <% end %>
           <% end %>
         </select>
       </div>
       <button type="submit" class="btn">Filter</button>
+      <a href="/issues?token=<%= params[:token] %>" class="btn">Reset all filters</a>
     </form>
   </div>
   <div class="span8">
