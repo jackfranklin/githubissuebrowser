@@ -10,9 +10,25 @@ def environment
   (ENV["ruby_env"] || :development).to_sym
 end
 
+def client_id
+  if environment == :production
+    ENV["client_id"]
+  else
+    config["client_id"]
+  end
+end
+
+def client_secret
+  if environment == :production
+    ENV["client_secret"]
+  else
+    config["client_secret"]
+  end
+end
+
 def root_url
   if environment == :production
-    ""
+    "http://githubissuebrowser.herokuapp.com"
   else
     "http://localhost:4000"
   end
@@ -23,11 +39,11 @@ def config
 end
 
 def github
-  @github ||= Github.new :client_id => config["client_id"], :client_secret => config["client_secret"]
+  @github ||= Github.new :client_id => client_id, :client_secret => client_secret
 end
 
 def auth_github(token)
-  @github_auth ||= Github.new :client_id => config["client_id"], :client_secret => config["client_secret"], :oauth_token => token
+  @github_auth ||= Github.new :client_id => client_id, :client_secret => client_secret, :oauth_token => token
 end
 
 
