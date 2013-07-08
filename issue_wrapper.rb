@@ -4,11 +4,23 @@ class IssueWrapper
   attr_reader :issues, :owners, :names
   def initialize(raw_issues)
     @issues = parse_issues(raw_issues)
+    @all_issues = @issues
     @owners, @names = get_owner_name(raw_issues)
   end
 
   def filter_by_owner(text)
-    @issues.select { |issue| issue.owner == text }
+    @issues = @issues.select { |issue| issue.owner == text }
+    self
+  end
+
+  def filter_by_name(text)
+    @issues = @issues.select { |issue| issue.name == text }
+    self
+  end
+
+  def restore
+    @issues = @all_issues
+    self
   end
 
   private

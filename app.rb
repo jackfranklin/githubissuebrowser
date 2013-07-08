@@ -49,8 +49,24 @@ end
 get "/issues" do
   @authed = auth_github(params[:token])
   @issues = @authed.issues.list :filter => "all", :state => "open", :auto_pagination => true
-  @wrapper = IssueWrapper.new(@issues)
+  @wrapper = process_filters(IssueWrapper.new(@issues), params)
   erb :main
+end
+
+def process_filters(wrap, params)
+  no_filter = true
+  if params[:owner] && params[:owner] != "all"
+    no_filter = false
+    wrap = wrap.filter_by_owner(params[:owner])
+  end
+  if params[:name] && params[:name] != "all"
+    no_filter = false
+    wrap = wrap.filter_by_name(params[:name])
+  end
+  if no_filter
+    wrap = wrap.restore
+  end
+  wrap
 end
 
 

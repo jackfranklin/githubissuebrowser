@@ -7,7 +7,7 @@
         <select name="owner">
           <option value="all">All</option>
           <% @wrapper.owners.map { |owner| owner.downcase }.sort.each do |owner| %>
-            <option value="<%= owner %>"><%= owner %></option>
+            <option value="<%= owner %>" <%= "selected" if params[:owner] == owner %> ><%= owner %></option>
           <% end %>
         </select>
       </div>
@@ -17,7 +17,7 @@
         <select name="name">
           <option value="all">All</option>
           <% @wrapper.names.map { |name| name.downcase }.sort.each do |name| %>
-            <option value="<%= name %>"><%= name %></option>
+            <option value="<%= name %>" <%= "selected" if params[:name] == name %> ><%= name %></option>
           <% end %>
         </select>
       </div>
