@@ -23,8 +23,13 @@ class IssueWrapper
   end
 
   def names_for_owner(owner)
-    filter_by_owner(owner)
-    @all_issues.map { |issue| issue.name }.uniq
+    @all_issues.select { |issue| issue.owner == owner }.map { |issue|
+      issue.name
+    }.uniq
+  end
+
+  def owner_for_name(name)
+    @all_issues.select { |issue| issue.name == name }.uniq.first.owner
   end
 
   def restore

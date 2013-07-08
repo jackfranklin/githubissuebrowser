@@ -81,4 +81,10 @@ describe IssueWrapper do
     end
   end
 
+  describe "getting owner for repo name" do
+    it "grabs the owner name" do
+      expect(@wrap.owner_for_name("test")).to eq("jackfranklin")
+    end
+  end
+
 end
